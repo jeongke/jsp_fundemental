@@ -142,13 +142,13 @@ String s = null;
 				];positions.add
 				
 				// 마커 이미지의 이미지 주소
-				imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+				imageSrc = "https://image.flaticon.com/icons/png/512/1825/1825759.png"; 
 				
 				///// 1977 개 마커 생성 시작
 				for (var i = 0; i < positions.length; i ++) {
 				    
 				    // 마커 이미지의 이미지 크기
-				    imageSize = new kakao.maps.Size(24, 35); 
+				    imageSize = new kakao.maps.Size(40, 50); 
 				    
 				    // 마커 이미지를 생성   
 				    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
