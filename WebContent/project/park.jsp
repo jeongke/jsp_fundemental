@@ -105,23 +105,31 @@ String s = null;
 <script>
 		var latitude = null;
 		var longitude = null;
+		var mapContainer = null;
+		var map = null;
+		var positions = null;
+		var marker = null;
+		var infowindow = null;
+		var imageSrc = null;
+		var imageSize = null;
+		var markerImage = null;
 		
 		if (navigator.geolocation) {
 		    navigator.geolocation.getCurrentPosition (function(pos) {
 		        latitude = pos.coords.latitude;
 		        longitude = pos.coords.longitude;
 		        //맵 생성
-				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+				mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 				mapOption = {
 					center : new kakao.maps.LatLng(latitude,longitude), // 현재 위치의 좌표를 지도 중심으로
 					level : 3 // 지도의 확대 레벨
 				};
 				
 				// 지도를 표시할 div와  지도 옵션으로  지도를 생성
-				var map = new kakao.maps.Map(mapContainer, mapOption);
+				map = new kakao.maps.Map(mapContainer, mapOption);
 				
 				// 마커를 표시할 위치와 title 객체 배열
-				var positions = [
+				positions = [
 					<%int index = 0;
 					for (ParkDto dto1 : list) {
 						index++;%>
@@ -134,26 +142,26 @@ String s = null;
 				];positions.add
 				
 				// 마커 이미지의 이미지 주소
-				var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+				imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 				
 				///// 1977 개 마커 생성 시작
 				for (var i = 0; i < positions.length; i ++) {
 				    
 				    // 마커 이미지의 이미지 크기
-				    var imageSize = new kakao.maps.Size(24, 35); 
+				    imageSize = new kakao.maps.Size(24, 35); 
 				    
 				    // 마커 이미지를 생성   
-				    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+				    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 				    
 				    // 마커를 생성
-				   var marker = new kakao.maps.Marker({
+				   marker = new kakao.maps.Marker({
 				        map: map, // 마커를 표시할 지도
 				        position: positions[i].latlng, // 마커를 표시할 위치
 				        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시
 				        image : markerImage // 마커 이미지
 				    });
 				    
-				   var infowindow = new kakao.maps.InfoWindow({
+				   infowindow = new kakao.maps.InfoWindow({
 				        content: positions[i].title // 인포윈도우에 표시할 내용
 				    });
 				    // 마커에 이벤트를 등록하는 함수 만들고 즉시 호출하여 클로저 생성
