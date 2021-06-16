@@ -1,0 +1,63 @@
+<div id="demo">sss</div>
+<img src="" id="weatherImg">
+<script src="../js/jquery-3.6.0.js"></script>
+<script>
+	let latitude;
+	let longitude;
+	let status;
+	function geoFindMe() {
+	  status = document.querySelector('#demo');
+	  function success(position) {
+	    latitude  = position.coords.latitude;
+	    longitude = position.coords.longitude;
+		$.ajax({
+			type : 'get',
+			url : 'http://api.openweathermap.org/data/2.5/weather?lat='+latitude+'&lon='+longitude+'&appid=562bcac6b837eb21f900201907b027ab&lang=kr',
+			dataType : 'json',
+			error : function(){
+				alert('error');
+			},
+			success : function(json){
+				let region = json.name;
+				
+				let temp = Math.trunc((json.main.temp - 273.15)*10)/10;
+				//let temp = json.main.temp - 273.15;
+				let humi = json.main.humidity;
+				let weather = json.weather[0].main;
+				let desc = json.weather[0].description;
+				let img = json.weather[0].icon;
+				let speed = json.wind.speed;
+				let country = json.sys.country;
+				let name = json.name;
+				let cloud = json.clouds.all;
+				let msg = `현재온도 : ${temp} <br>
+                 현재습도 : ${humi} <br>
+                 날씨 : ${weather} <br>
+                 상세날씨설명 : ${desc} <br>
+                 날씨 이미지 : ${img} <br>
+                 바람 : ${speed} <br>
+                 나라 : ${country} <br>
+                 도시이름 : ${name} <br>
+                 구름 : ${cloud}% <br>`
+                    
+				status.innerHTML = msg ;
+				$("#weatherImg").attr("src", "http://openweathermap.org/img/w/" + img + ".png");
+			}
+		});
+	    
+	  }
+
+	  function error() {
+	    status.textContent = 'Unable to retrieve your location';
+	  }
+
+	  if(!navigator.geolocation) {
+	    status.textContent = 'Geolocation is not supported by your browser';
+	  } else {
+	    status.textContent = 'Locating…';
+	    navigator.geolocation.getCurrentPosition(success, error);
+	  }
+
+	}
+	geoFindMe() ;
+</script>

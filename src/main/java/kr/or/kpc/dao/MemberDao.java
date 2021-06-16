@@ -19,7 +19,6 @@ public class MemberDao {
 		} catch (ClassNotFoundException e) {
 		}
 	}
-
 	
 	public static MemberDao getInstance() {
 		if (single == null) {
